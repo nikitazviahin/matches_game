@@ -1,2 +1,3 @@
-# torches_game
-Game with torches
+# matches_game
+Game with matches
+

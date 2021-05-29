@@ -6,3 +6,7 @@ The winner is the one with the even number of matches.
 
 This is the task for Stormotion Internship programm  
 To run the app on your machine follow next steps:  
+1. Clone this repository  
+2. Go to matches_game/matches  
+3. Run 'npm i' or 'npm innstall'.
+4. Run 'npm run start'.

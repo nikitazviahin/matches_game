@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './App.css';
-import PlayerFirst from './pages/playerFirst';
+import PlayerFirst from './matchesGame';
 
 function App() {
 

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const PlayerFirst = (props) => {
+const MatchesGame = (props) => {
 
     const [matchesLeft, setMatchesLeft] = useState(25)
     const [matchesLeftYours, setMatchesLeftYours] = useState(0)
@@ -76,4 +76,4 @@ const PlayerFirst = (props) => {
     );
 }
 
-export default PlayerFirst;
+export default MatchesGame;

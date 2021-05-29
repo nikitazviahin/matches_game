@@ -8,5 +8,5 @@ This is the task for Stormotion Internship programm
 To run the app on your machine follow next steps:  
 1. Clone this repository  
 2. Go to matches_game/matches  
-3. Run 'npm i' or 'npm innstall'.
+3. Run 'npm i' or 'npm install'.
 4. Run 'npm run start'.

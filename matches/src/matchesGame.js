@@ -2,10 +2,12 @@ import React, { useState } from 'react';
 
 const MatchesGame = (props) => {
 
-    const [matchesLeft, setMatchesLeft] = useState(25)
     const [matchesLeftYours, setMatchesLeftYours] = useState(0)
     const [matchesLeftAI, setMatchesLeftAI] = useState(0)
     
+    const matchesTotal = 25;
+    const matchesLeft = matchesTotal - matchesLeftYours - matchesLeftAI; 
+
     let isGameEnded = false;
 
     const calculateWinner = (number, matchesPlayer) => {
@@ -27,18 +29,15 @@ const MatchesGame = (props) => {
     }
   
     const takeMatches = (number) => {
-      setMatchesLeft(matchesLeft => matchesLeft - number)
       setMatchesLeftYours(matchesLeftYours => matchesLeftYours + number)
       takeMatchesAI(matchesLeft - number)
     }
   
     const takeMatchesAI = (number) => {
       if ((((number - 3) % 4 === 0) || ((number - 3) % 4 === 1))) {
-        setMatchesLeft(matchesLeft => matchesLeft - 3)
         setMatchesLeftAI(matchesLeftAI => matchesLeftAI + 3)
       }
       if ((((number - 1) % 4 === 0) || ((number - 1) % 4 === 1))) {
-        setMatchesLeft(matchesLeft => matchesLeft - 1)
         setMatchesLeftAI(matchesLeftAI => matchesLeftAI + 1)
       }
     }
@@ -58,7 +57,6 @@ const MatchesGame = (props) => {
           <div className='Matches'>{matchesLeft} ✏️</div>
           <div className='Winner'>{winner}</div>
           {isGameEnded ? <div className='ButtonPadding'><button className='ChooseButton' onClick={() => {
-                                                                                                  setMatchesLeft(25)
                                                                                                   setMatchesLeftYours(0)
                                                                                                   setMatchesLeftAI(0)
                                                                                                   }}>Play again</button></div> :

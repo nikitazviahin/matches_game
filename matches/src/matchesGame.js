@@ -34,11 +34,10 @@ const MatchesGame = (props) => {
     }
   
     const takeMatchesAI = (number) => {
-      if ((((number - 3) % 4 === 0) || ((number - 3) % 4 === 1))) {
-        setMatchesLeftAI(matchesLeftAI => matchesLeftAI + 3)
-      }
-      if ((((number - 1) % 4 === 0) || ((number - 1) % 4 === 1))) {
-        setMatchesLeftAI(matchesLeftAI => matchesLeftAI + 1)
+      for (let i = 1; i <= 3; i += 2) {
+        if ((number - i) % 4 === 0 || (number - i) % 4 === 1) {
+          setMatchesLeftAI(matchesLeftAI => matchesLeftAI + i)
+        }
       }
     }
 

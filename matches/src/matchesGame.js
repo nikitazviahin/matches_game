@@ -9,6 +9,7 @@ const MatchesGame = (props) => {
     const matchesLeft = matchesTotal - matchesLeftYours - matchesLeftAI; 
 
     let isGameEnded = false;
+    let buttonsArray = new Array(3);
 
     const calculateWinner = (number, matchesPlayer) => {
       if (number === 0) {
@@ -25,24 +26,33 @@ const MatchesGame = (props) => {
     const winner = calculateWinner(matchesLeft, matchesLeftYours)
   
     if (winner === 'You are winner' || winner === 'AI is winner') {
-      isGameEnded = true
+      isGameEnded = true;
     }
   
     const takeMatches = (number) => {
-      setMatchesLeftYours(matchesLeftYours => matchesLeftYours + number)
-      takeMatchesAI(matchesLeft - number)
+      setMatchesLeftYours(matchesLeftYours => matchesLeftYours + number);
+      takeMatchesAI(matchesLeft - number);
     }
   
     const takeMatchesAI = (number) => {
       for (let i = 1; i <= 3; i += 2) {
         if ((number - i) % 4 === 0 || (number - i) % 4 === 1) {
-          setMatchesLeftAI(matchesLeftAI => matchesLeftAI + i)
+          setMatchesLeftAI(matchesLeftAI => matchesLeftAI + i);
         }
       }
     }
 
     if (!props.status && matchesLeft === 25) {
-      takeMatchesAI(matchesLeft)
+      takeMatchesAI(matchesLeft);
+    }
+
+    for (let i = 1; i <= 3; i++){
+      let canTakeMatches = matchesLeft >= i;
+      buttonsArray[i] = <div key={i} 
+                            disabled={!canTakeMatches} 
+                            className='ButtonPadding'>
+                            <button className='ChooseButton' onClick={() => {takeMatches(i)}}>{canTakeMatches ? '✏️ '.repeat(i) : 'Not enough matches'}</button>
+                        </div> 
     }
 
     return (
@@ -58,15 +68,11 @@ const MatchesGame = (props) => {
           {isGameEnded ? <div className='ButtonPadding'><button className='ChooseButton' onClick={() => {
                                                                                                   setMatchesLeftYours(0)
                                                                                                   setMatchesLeftAI(0)
-                                                                                                  }}>Play again</button></div> :
+                                                                                                  }}>Play again</button></div> : 
             <div className='ButtonsPanel'>
-              {(matchesLeft >= 3) ? <div className='ButtonPadding'><button className='ChooseButton' onClick={() => {takeMatches(3)}}>✏️ ✏️ ✏️</button></div> : 
-                <div className='ButtonPadding'><button className='ChooseButton' disabled onClick={() => {takeMatches(3)}}>Not enough matches</button></div>}
-              {(matchesLeft >= 2) ? <div className='ButtonPadding'><button className='ChooseButton' onClick={() => {takeMatches(2)}}>✏️ ✏️</button></div> : 
-                <div className='ButtonPadding'><button className='ChooseButton' disabled onClick={() => {takeMatches(2)}}>Not enough matches</button></div>}
-              {(matchesLeft >= 1) ? <div className='ButtonPadding'><button className='ChooseButton' onClick={() => {takeMatches(1)}}>✏️</button></div> : 
-                <div className='ButtonPadding'><button className='ChooseButton' disabled onClick={() => {takeMatches(1)}}>Not enough matches</button></div>}
-            </div>}
+              {buttonsArray}
+            </div>
+            }
           <div>Your matches {matchesLeftYours}</div>
           <div>AI's matches {matchesLeftAI}</div>
       </div>

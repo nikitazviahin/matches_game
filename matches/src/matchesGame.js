@@ -8,20 +8,23 @@ const MatchesGame = (props) => {
     const matchesTotal = 25;
     const matchesLeft = matchesTotal - matchesLeftYours - matchesLeftAI;
 
+    const takeMatchesAI = (number) => {
+      for (let i = 1; i <= 3; i += 2) {
+        if ((number - i) % 4 === 0 || (number - i) % 4 === 1) {
+          setMatchesLeftAI(matchesLeftAI => matchesLeftAI + i);
+        }
+      }
+    }
+
     useEffect(() => 
       {if (!props.status && matchesLeft === 25) {
         takeMatchesAI(matchesTotal);
-      }})
-
-    useEffect(() => 
-      {if (matchesLeft < 25) {
-      takeMatchesAI(matchesLeft);
-    }}, [matchesLeftYours])
-
+      } else if (matchesLeft < 25) {
+        takeMatchesAI(matchesLeft);
+      }}, [props.status, matchesLeftYours])
 
     let isGameEnded = false;
     let buttonsArray = new Array(3);
-    
 
     const calculateWinner = (number, matchesPlayer) => {
       if (number === 0) {
@@ -43,14 +46,6 @@ const MatchesGame = (props) => {
   
     const takeMatches = (number) => {
       setMatchesLeftYours(matchesLeftYours => matchesLeftYours + number);
-    }
-  
-    const takeMatchesAI = (number) => {
-      for (let i = 1; i <= 3; i += 2) {
-        if ((number - i) % 4 === 0 || (number - i) % 4 === 1) {
-          setMatchesLeftAI(matchesLeftAI => matchesLeftAI + i);
-        }
-      }
     }
 
     for (let i = 1; i <= 3; i++){

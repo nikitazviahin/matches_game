@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const MatchesGame = (props) => {
 
@@ -6,10 +6,22 @@ const MatchesGame = (props) => {
     const [matchesLeftAI, setMatchesLeftAI] = useState(0)
     
     const matchesTotal = 25;
-    const matchesLeft = matchesTotal - matchesLeftYours - matchesLeftAI; 
+    const matchesLeft = matchesTotal - matchesLeftYours - matchesLeftAI;
+
+    useEffect(() => 
+      {if (!props.status && matchesLeft === 25) {
+        takeMatchesAI(matchesTotal);
+      }})
+
+    useEffect(() => 
+      {if (matchesLeft < 25) {
+      takeMatchesAI(matchesLeft);
+    }}, [matchesLeftYours])
+
 
     let isGameEnded = false;
     let buttonsArray = new Array(3);
+    
 
     const calculateWinner = (number, matchesPlayer) => {
       if (number === 0) {
@@ -31,7 +43,6 @@ const MatchesGame = (props) => {
   
     const takeMatches = (number) => {
       setMatchesLeftYours(matchesLeftYours => matchesLeftYours + number);
-      takeMatchesAI(matchesLeft - number);
     }
   
     const takeMatchesAI = (number) => {
@@ -42,16 +53,11 @@ const MatchesGame = (props) => {
       }
     }
 
-    if (!props.status && matchesLeft === 25) {
-      takeMatchesAI(matchesLeft);
-    }
-
     for (let i = 1; i <= 3; i++){
       let canTakeMatches = matchesLeft >= i;
-      buttonsArray[i] = <div key={i} 
-                            disabled={!canTakeMatches} 
+      buttonsArray[i] = <div key={i}
                             className='ButtonPadding'>
-                            <button className='ChooseButton' onClick={() => {takeMatches(i)}}>{canTakeMatches ? '✏️ '.repeat(i) : 'Not enough matches'}</button>
+                            <button disabled={!canTakeMatches} className='ChooseButton' onClick={() => {takeMatches(i)}}>{canTakeMatches ? '✏️ '.repeat(i) : 'Not enough matches'}</button>
                         </div> 
     }
 
